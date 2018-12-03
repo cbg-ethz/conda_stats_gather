@@ -1,0 +1,14 @@
+[Unit] 
+Description=Update download stats from conda
+After=network.target
+
+[Service] 
+Type=oneshot
+#User=dryak
+#Group=users
+WorkingDirectory=/home/dryak/project/conda_stats_gather/
+ExecStart=/home/dryak/project/conda_stats_gather/conda_stats_gather.pl
+
+[Install]
+WantedBy=multi-user.target
+

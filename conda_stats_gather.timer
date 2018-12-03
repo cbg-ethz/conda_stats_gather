@@ -1,0 +1,15 @@
+[Unit]
+Description=Timer to get Conda package stats
+After=network.target
+
+[Timer]
+OnBootSec=0min
+OnCalendar=*:0
+AccuracySec=1min
+Persistent=true
+#WakeSystem=true
+RemainAfterElapse=yes
+
+[Install]
+#WantedBy=multi-user.target
+WantedBy=timers.target

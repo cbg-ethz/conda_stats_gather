@@ -45,10 +45,10 @@ picard
 #https://api.anaconda.org/package/bioconda/{package}
 
 foreach ( @packages ) {
-    # optimization : https://metacpan.org/pod/LWP::UserAgent with keep_alive
-    my $ff = File::Fetch->new(uri => "https://api.anaconda.org/package/bioconda/${_}");  # /files for downloads only
-    my $data;
-    my $fname = $ff->fetch(\$data, to => 'tmp/' ) or die $ff->error;
+	# optimization : https://metacpan.org/pod/LWP::UserAgent with keep_alive
+	my $ff = File::Fetch->new(uri => "https://api.anaconda.org/package/bioconda/${_}");  # /files for downloads only
+	my $data;
+	my $fname = $ff->fetch(\$data, to => 'tmp/' ) or die $ff->error;
 
-    move($fname, strftime "out/%Y%m%d%H-${_}.json", localtime);
+	move($fname, strftime "out/%Y%m%d%H-${_}.json", localtime);
 }
