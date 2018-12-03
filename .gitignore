@@ -1,0 +1,5 @@
+out/*.json
+tmp/*
+downloads.csv
+overview_diffs.pdf
+overview_totals.pdf
