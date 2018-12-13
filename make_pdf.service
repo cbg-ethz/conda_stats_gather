@@ -1,0 +1,14 @@
+[Unit] 
+Description=Build stats PDF
+After=remote-fs.target
+
+[Service] 
+Type=oneshot
+#User=dryak
+#Group=users
+WorkingDirectory=/home/dryak/project/conda_stats_gather/
+ExecStart=make
+
+[Install]
+WantedBy=multi-user.target
+
