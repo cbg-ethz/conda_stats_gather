@@ -4,10 +4,10 @@ After=network.target
 
 [Service] 
 Type=oneshot
-#User=dryak
-#Group=users
-WorkingDirectory=/home/dryak/project/conda_stats_gather/
-ExecStart=/home/dryak/project/conda_stats_gather/conda_stats_gather.pl
+User=ivanto
+Group=bsse-beerenwinkel
+WorkingDirectory=/opt/conda_stats_gather/
+ExecStart=/usr/bin/scl enable rh-perl526 -- /opt/conda_stats_gather/conda_stats_gather.pl
 
 [Install]
 WantedBy=multi-user.target
