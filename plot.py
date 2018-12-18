@@ -22,6 +22,8 @@ def plot(df_long, value_var, ylabel, fname):
 
     # g.add_legend()
     g.set_axis_labels('Date', ylabel)
+    #g.set_xticklabels(rotation=45)  # https://github.com/mwaskom/seaborn/issues/1598
+    plt.xticks(rotation=45, ha='right')
 
     for ax in g.axes.flatten():
         ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
