@@ -3,7 +3,11 @@ import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from dateutil.rrule import MO
 
+day = mdates.DayLocator()
+wday = mdates.WeekdayLocator(byweekday=MO)
 
 sns.set_context('talk')
 
@@ -24,8 +28,11 @@ def plot(df_long, value_var, ylabel, fname):
     g.set_axis_labels('Date', ylabel)
     #g.set_xticklabels(rotation=45)  # https://github.com/mwaskom/seaborn/issues/1598
     plt.xticks(rotation=45, ha='right')
+    plt.minorticks_on()
 
     for ax in g.axes.flatten():
+        ax.xaxis.set_minor_locator(day)
+        ax.xaxis.set_major_locator(wday)
         ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
 
     g.savefig(fname)
