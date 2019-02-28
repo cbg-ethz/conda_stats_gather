@@ -1,9 +1,15 @@
+THISMONTH := $(shell date '+%Y%m' )
+# or:   ls out/ | tail -1 | grep -Po '^[[:digit:]]{6}'
+
+
 .PHONY: all clean
 
 all: overview.pdf
 
-downloads.csv: out/*.json
-	@echo -e '\e[32mGather stats...\e[0m'
+# TODO hangle past months in separate archive
+
+downloads.csv: out/$(THISMONTH)*.json
+	@echo -e '\e[32mGather stats from $(THISMONTH)...\e[0m'
 	./make_csv.pl > $@
 	@echo -e '\e[2mdone\e[0m'
 

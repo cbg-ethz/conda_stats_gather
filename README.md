@@ -4,7 +4,7 @@ Installing on RedHat 7
 
 Inside ETHZ network, the server is accessible at :
 
- - <http://bs-beerenwinkel08.ethz.ch/>
+ - <http://bs-bewi08.ethz.ch/>
 
 `production-server` is the branch currently deployed on the server
 
