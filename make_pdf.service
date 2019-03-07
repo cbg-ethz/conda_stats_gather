@@ -1,6 +1,6 @@
 [Unit] 
 Description=Build stats PDF
-After=remote-fs.target
+After=remote-fs.target conda_stats_gather.service
 
 [Service] 
 Type=oneshot
