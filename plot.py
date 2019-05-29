@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+import sys
 import pandas as pd
-
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from dateutil.rrule import MO
+
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 day = mdates.DayLocator()
 wday = mdates.WeekdayLocator(byweekday=MO)
@@ -61,6 +64,10 @@ def main():
 
     df_long['variable'].map(lambda x: g2[x])
     df_long['group'] = df_long['variable'].map(lambda x: g2[x])
+
+    if len(sys.argv) > 1 and sys.argv[1] in ('-i', '--in-house'):
+        print('generate plots for in-house only');
+        df_long = df_long[df_long['group'] == 'in-house']
 
     totals(df_long)
     diffs(df_long)
