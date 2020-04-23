@@ -1,4 +1,6 @@
 out/*.json
 tmp/*
+archive/*.csv
+archive/*.tar*
 downloads.csv
 overview*pdf
