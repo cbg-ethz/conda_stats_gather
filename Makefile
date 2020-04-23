@@ -8,7 +8,7 @@ all: overview.pdf
 
 downloads.csv: $(wildcard out/$(THISMONTH)*.json)
 	@echo -e '\e[32mGather stats from $(THISMONTH)...\e[0m'
-	./make_csv.pl | gawk 'NR==1||FNR>1' $(wildcard archive/downloads-*.csv) - > $@
+	./make_csv.pl | gawk 'NR==1||FNR>1' $(sort $(wildcard archive/downloads-*.csv)) - > $@
 	@echo -e '\e[2mdone\e[0m'
 
 overview_totals.pdf overview_diffs.pdf: downloads.csv
