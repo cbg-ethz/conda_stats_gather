@@ -6,11 +6,9 @@ THISMONTH := $(shell date '+%Y%m' )
 
 all: overview.pdf
 
-# TODO hangle past months in separate archive
-
-downloads.csv: out/$(THISMONTH)*.json
+downloads.csv: $(wildcard out/$(THISMONTH)*.json)
 	@echo -e '\e[32mGather stats from $(THISMONTH)...\e[0m'
-	./make_csv.pl > $@
+	./make_csv.pl | gawk 'NR==1||FNR>1' $(wildcard archive/downloads-*.csv) - > $@
 	@echo -e '\e[2mdone\e[0m'
 
 overview_totals.pdf overview_diffs.pdf: downloads.csv
