@@ -1,4 +1,5 @@
 THISMONTH := $(shell date '+%Y%m' )
+LASTMONTH := $(shell date '+%Y%m' --date='last month 06:00' )
 # or:   ls out/ | tail -1 | grep -Po '^[[:digit:]]{6}'
 
 
@@ -6,7 +7,10 @@ THISMONTH := $(shell date '+%Y%m' )
 
 all: overview.pdf
 
-downloads.csv: $(wildcard out/$(THISMONTH)*.json)
+archive/downloads-$(LASTMONTH).csv:
+	./mkarchive $(LASTMONTH)
+
+downloads.csv: archive/downloads-$(LASTMONTH).csv $(wildcard out/$(THISMONTH)*.json)
 	@echo -e '\e[32mGather stats from $(THISMONTH)...\e[0m'
 	./make_csv.pl | gawk 'NR==1||FNR>1' $(sort $(wildcard archive/downloads-*.csv)) - > $@
 	@echo -e '\e[2mdone\e[0m'
