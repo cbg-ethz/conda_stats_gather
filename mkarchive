@@ -28,4 +28,4 @@ fi
 echo -e "\e[32;1mdoing archive for $1\e[0m"
 ./make_csv.pl "$1" > archive/downloads-$1.csv
 find out/ -type f -iname "$1*.json" | tar -c --files-from=- | zstd -19 -f -o archive/$1.tar.zstd
-zstdcat archive/$1.tar.zstd | tar tf - | grep -oP '^out/[[:digit:]]{10}-.*\.json$' | xargs rm -v
+zstdcat archive/$1.tar.zstd | tar tf - | grep -oP '^out/[[:digit:]]{10}-.*\.json$' | xargs -r rm -v
