@@ -1,0 +1,11 @@
+name: conda_csg_env
+channels:
+  - defaults
+  - conda-forge
+  - bioconda
+dependencies:
+  - pandas
+  - seaborn
+  - matplotlib
+  - python-dateutil
+  - perl-base

@@ -6,7 +6,9 @@ After=remote-fs.target conda_stats_gather.service
 Type=oneshot
 User=ivanto@d
 Group=bsse-beerenwinkel@d
-ExecStart=/usr/bin/scl enable rh-python36 -- scl enable rh-perl526 -- make -C /opt/conda_stats_gather/
+Environment=PATH=/opt/conda_stats_gather/conda_csg_env/bin:/usr/local/bin:/usr/bin:/bin
+WorkingDirectory=/opt/conda_stats_gather/
+ExecStart=/usr/bin/env make -C /opt/conda_stats_gather/
 
 [Install]
 WantedBy=multi-user.target

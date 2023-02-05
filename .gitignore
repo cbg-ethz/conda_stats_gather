@@ -4,3 +4,4 @@ archive/*.csv
 archive/*.tar*
 downloads.csv
 overview*pdf
+conda_csg_env/*

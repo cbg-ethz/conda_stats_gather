@@ -6,8 +6,9 @@ After=network.target
 Type=oneshot
 User=ivanto@d
 Group=bsse-beerenwinkel@d
+Environment=PATH=/opt/conda_stats_gather/conda_csg_env/bin:/usr/local/bin:/usr/bin:/bin
 WorkingDirectory=/opt/conda_stats_gather/
-ExecStart=/usr/bin/scl enable rh-perl526 -- /opt/conda_stats_gather/conda_stats_gather.pl
+ExecStart=/opt/conda_stats_gather/conda_stats_gather.pl
 
 [Install]
 WantedBy=multi-user.target
