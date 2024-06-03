@@ -40,6 +40,8 @@ haploclique
 smallgenomeutilities
 samtools
 picard
+cojac
+lollipop
 };
 
 #https://api.anaconda.org/package/bioconda/{package}
