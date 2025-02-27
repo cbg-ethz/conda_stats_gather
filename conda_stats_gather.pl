@@ -42,6 +42,7 @@ samtools
 picard
 cojac
 lollipop
+viloca
 };
 
 #https://api.anaconda.org/package/bioconda/{package}
