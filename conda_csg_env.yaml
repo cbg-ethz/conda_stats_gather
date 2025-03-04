@@ -1,6 +1,5 @@
 name: conda_csg_env
 channels:
-  - defaults
   - conda-forge
   - bioconda
 dependencies:
@@ -9,3 +8,6 @@ dependencies:
   - matplotlib
   - python-dateutil
   - perl-base
+  - perl-yaml-pp
+  - xsv
+  - go-yq
