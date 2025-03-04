@@ -4,29 +4,35 @@
 use strict;
 use Encode;
 
+use YAML::PP;
+my $ypp = YAML::PP->new;
 
 my $path = 'out';
 
+#  load_file returns a perl array of all section, deref to get the first yaml list (and ignore other sections)
+my @packages = @{$ypp->load_file("make_csv.yaml")};
 
-
-my @packages = qw{ 
-ngshmmalign
-shorah
-haploclique
-indelfixer
-consensusfixer
-smallgenomeutilities
-
-lofreq
-mvicuna
-prinseq
-mafft
-bwa
-samtools
-picard
-snakemake
-savage
-};
+# my @packages = qw{
+# ngshmmalign
+# shorah
+# haploclique
+# indelfixer
+# consensusfixer
+# smallgenomeutilities
+# cojac
+# lollipop
+# viloca
+#
+# lofreq
+# mvicuna
+# prinseq
+# mafft
+# bwa
+# samtools
+# picard
+# snakemake
+# savage
+# };
 
 # Parameter: Filtering Parameter
 my $filter = undef;
@@ -40,7 +46,7 @@ if (defined($ARGV[0])) {
 my $count = 0;
 
 
-my $cur = { 't' => '', map { '$_' => 0 }, @packages };
+my $cur = { 't' => '', map +( $_ => 0 ), @packages };
 sub flush {
 	my $cur = pop;
 

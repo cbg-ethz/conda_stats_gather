@@ -3,8 +3,8 @@
 if [[ ! "$1" =~ ^[[:digit:]]{4,6}$ ]]; then
 	echo -e "\e[31;1m$1 needs to be 4 to 6 digit long\e[0m"
 	exit 1
-elif [[ -f archive/downloads-$1.csv ]]; then
-	echo -e "\e[31;1marchive/downloads-$1.csv exists\e[0m"
+elif [[ -f archive/downloads-$1.csv.orig ]]; then
+	echo -e "\e[31;1marchive/downloads-$1.csv.orig exists\e[0m"
 	exit 1
 elif [[ -f archive/$1.tar.zstd ]]; then
 	echo -e "\e[31;1marchive/$1.tar.zstd exists\e[0m"
@@ -12,11 +12,11 @@ elif [[ -f archive/$1.tar.zstd ]]; then
 elif [[ "$1" =~ ^[[:digit:]]{4}$ ]] &&  (( $(find out/ -type f -iname "$1*.json" | wc -l) == 0 )); then
 	# Yearly archive
 	echo -e "\e[32;1mpacking yearly archive for $1\e[0m"
-	if (( $(find archive/ -iname "$1??.tar.*" -o -iname "downloads-$1??.csv" | wc -l ) != 24 )); then
+	if (( $(find archive/ -iname "$1??.tar.*" -o -iname "downloads-$1??.csv.orig" | wc -l ) != 24 )); then
 		echo -e "\e[31;1m$1 must have exactly 12 months worth of archive\e[0m"
 		exit 1
 	fi
-	gawk 'NR==1||FNR>1' $(printf "archive/downloads-$1%02u.csv\n" {1..12})  > archive/downloads-$1.csv
+	gawk 'NR==1||FNR>1' $(printf "archive/downloads-$1%02u.csv.orig\n" {1..12})  > archive/downloads-$1.csv.orig
 	# TODO tar --append
 	exit 0
 elif (( $(find out/ -type f -iname "$1*.json" | wc -l) < 10 )); then
@@ -26,6 +26,6 @@ fi
 
 # Monthly archive
 echo -e "\e[32;1mdoing archive for $1\e[0m"
-./make_csv.pl "$1" > archive/downloads-$1.csv
+./make_csv.pl "$1" > archive/downloads-$1.csv.orig
 find out/ -type f -iname "$1*.json" | tar -c --verbatim-files-from --files-from=- | zstd -19 -f -o archive/$1.tar.zstd
 zstdcat archive/$1.tar.zstd | tar tf - | grep -oP '^out/[[:digit:]]{10}-.*\.json$' | xargs -r rm -v
