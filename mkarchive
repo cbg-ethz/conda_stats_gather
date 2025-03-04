@@ -16,8 +16,21 @@ elif [[ "$1" =~ ^[[:digit:]]{4}$ ]] &&  (( $(find out/ -type f -iname "$1*.json"
 		echo -e "\e[31;1m$1 must have exactly 12 months worth of archive\e[0m"
 		exit 1
 	fi
-	gawk 'NR==1||FNR>1' $(printf "archive/downloads-$1%02u.csv.orig\n" {1..12})  > archive/downloads-$1.csv.orig
-	# TODO tar --append
+
+	F=0
+	echo -e "\e[32;1mmerging tar files $1\e[0m"
+	bsdtar -c $(printf "@archive/$1%02u.tar.zstd\n" {1..12})  | zstd -19 -f -o  archive/$1.tar.zstd	|| F=1
+	echo -e "\e[32;1mmerging csv files $1\e[0m"
+	# NOTE concatenation needs all table members to have the same number of column: we DO NOT use the .orig
+	make $(printf "archive/downloads-$1%02u.csv\n" {1..12})	&&
+	xsv cat rows --output archive/downloads-$1.csv.orig -- $(printf "archive/downloads-$1%02u.csv\n" {1..12})	|| F=1
+
+	if (( F )); then
+		echo -e "\e[31;1mmerging failed\e[0m"
+		exit 1
+	fi
+	echo -e "\e[32;1mclean-up\e[0m"
+	mv -v $(printf "archive/$1%02u.tar.zstd\n" {1..12}) $(printf "archive/downloads-$1%02u.csv\n" {1..12}) $(printf "archive/downloads-$1%02u.csv.orig\n" {1..12}) archive/save/
 	exit 0
 elif (( $(find out/ -type f -iname "$1*.json" | wc -l) < 10 )); then
 	echo -e "\e[31;1less than ten output json match $1\e[0m"

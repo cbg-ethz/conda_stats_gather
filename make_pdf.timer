@@ -3,7 +3,7 @@ Description=Timer to build stats PDF
 After=remote-fs.target conda_stats_gather.timer conda_stats_gather.service
 
 [Timer]
-OnCalendar=05:00
+OnCalendar=*-*-2/5 05:00
 AccuracySec=10min
 Persistent=true
 #WakeSystem=true
